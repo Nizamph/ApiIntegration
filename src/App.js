@@ -1,31 +1,34 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
 
 function App() {
-  const dummyMovies = [
-    {
-      id: 1,
-      title: 'Some Dummy Movie',
-      openingText: 'This is the opening text of the movie',
-      releaseDate: '2021-05-18',
-    },
-    {
-      id: 2,
-      title: 'Some Dummy Movie 2',
-      openingText: 'This is the second opening text of the movie',
-      releaseDate: '2021-05-19',
-    },
-  ];
+    const [movie, setMovie] = useState([])
+  const fetchDataHandler = () => {
+    fetch('https://swapi.dev/api/films').then((resolve) => {
+     return resolve.json().then((data) => {
+      const transformedData = data.results.map((imageData) => {
+        return {
+          id: imageData.episode_id,
+          title: imageData.title,
+          openingText: imageData.opening_crawl,
+          releaseDate: imageData.release_date
+        
+        }
+      })
+         setMovie(transformedData)
+      })
+    })
+  }
 
   return (
     <React.Fragment>
       <section>
-        <button>Fetch Movies</button>
+        <button onClick={fetchDataHandler}>Fetch Movies</button>
       </section>
       <section>
-        <MoviesList movies={dummyMovies} />
+        <MoviesList movies={movie} />
       </section>
     </React.Fragment>
   );
