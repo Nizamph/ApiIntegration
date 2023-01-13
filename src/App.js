@@ -6,23 +6,48 @@ import './App.css';
 function App() {
     const [movie, setMovie] = useState([])
     const [loading,setIsLoading] = useState(false)
+    const [error, setError] = useState(null)
   const fetchDataHandler = async() => {
         setIsLoading(true)
-      const response = await fetch('https://swapi.dev/api/films')
-        const data = await response.json()
-            const transformedData = data.results.map((imageData) => {
-              return {
-                id: imageData.episode_id,
-                title: imageData.title,
-                openingText: imageData.opening_crawl,
-                releaseDate: imageData.release_date
-              
-              }
-            })
-               setMovie(transformedData)
-            setIsLoading(false)
- 
+        setError(null)
+        try{
+          const response = await fetch('https://swapi.dev/api/films')
+          if(!response.ok) {
+            throw new Error('something went wrong :(')
+          }  
+          const data = await response.json()
+       
+              const transformedData = data.results.map((imageData) => {
+                return {
+                  id: imageData.episode_id,
+                  title: imageData.title,
+                  openingText: imageData.opening_crawl,
+                  releaseDate: imageData.release_date
+                
+                }
+              })
+                 setMovie(transformedData)
+         
+
+        } catch (error) {
+          setError(error.message)  
+        }
+
+        setIsLoading(false)
   }
+
+  let content = <p>Found no movies</p>
+   if(movie.length>0) {
+   content =  <MoviesList movies={movie} />
+   }
+
+   if(error) {
+    content = <p>{error}</p>
+   }
+
+   if(loading) {
+     content = <p>Loading...</p>
+   }
 
   return (
     <React.Fragment>
@@ -30,8 +55,7 @@ function App() {
         <button onClick={fetchDataHandler}>Fetch Movies</button>
       </section>
       <section>
-       { !loading && <MoviesList movies={movie} />} 
-       {loading && <p>...content is loading please hang up here</p>}
+       {content}
       </section>
     </React.Fragment>
   );
