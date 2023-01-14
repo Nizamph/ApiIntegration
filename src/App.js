@@ -13,9 +13,9 @@ function App() {
         setIsLoading(true)
         setError(null)
         try{
-          const response = await fetch('https://swapi.dev/api/films')
-          if(!response.ok) {
-            throw new Error('something went wrong :(')
+          const response =  await fetch('https://swapi.dev/api/films')
+           if(!response.ok) {
+            throw new Error('something went wrong...retrying')
           }  
           const data = await response.json()
        
@@ -60,7 +60,9 @@ function App() {
     <React.Fragment>
       <section>
         <button onClick={fetchDataHandler}>Fetch Movies</button>
+        <button>Stop</button>
       </section>
+      
       <section>
        {content}
       </section>
