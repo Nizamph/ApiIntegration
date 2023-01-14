@@ -1,0 +1,22 @@
+
+.label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  margin-right: 360px;
+  margin-bottom: 9px;
+}
+
+.openText {
+  margin-bottom: 6px;
+  padding-bottom: 80px;
+  border-radius: 6px;
+  border-width: thin;
+}
+
+.input {
+ margin-bottom: 6px;
+ padding-bottom: 10px;
+ border-radius: 6px;
+ border-width: thin;
+}

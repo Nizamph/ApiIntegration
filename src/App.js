@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-
+import MovieForm from './components/MovieForm';
 import MoviesList from './components/MoviesList';
 import './App.css';
 
@@ -8,7 +8,7 @@ function App() {
     const [loading,setIsLoading] = useState(false)
     const [error, setError] = useState(null)
 
- 
+
   const fetchDataHandler = useCallback(async() => {
         setIsLoading(true)
         setError(null)
@@ -59,12 +59,10 @@ function App() {
   return (
     <React.Fragment>
       <section>
+        <MovieForm/>
         <button onClick={fetchDataHandler}>Fetch Movies</button>
-        <button>Stop</button>
-      </section>
-      
-      <section>
        {content}
+      
       </section>
     </React.Fragment>
   );
