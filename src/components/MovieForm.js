@@ -1,7 +1,8 @@
 import React from "react";
 import './MovieForm.css';
-import { useRef } from "react";
-const MovieForm = () => {
+import { useRef} from "react";
+
+const MovieForm = (props) => {
 
   const titleInputRef = useRef()
   const openingTextInputRef = useRef()
@@ -14,7 +15,14 @@ const MovieForm = () => {
       titleInputRef.current.value = '';
       openingTextInputRef.current.value='';
       releaseDateInputRef.current.value='';
-      console.log(enteredTitle,enteredOpeningTitle,enteredReleaseDate)
+      
+      const movies = {
+       title: enteredTitle,
+       openingText: enteredOpeningTitle,
+       releaseDate: enteredReleaseDate
+      }
+
+     props.onSaveList(movies)
   }
   return (
    <React.Fragment>
@@ -29,7 +37,8 @@ const MovieForm = () => {
       <button type="submit" style={{marginBottom:"15px",marginTop:"10px"}}>Add Movie</button>
     </form>
       
-    
+  
+
    </React.Fragment>
   )
 }
